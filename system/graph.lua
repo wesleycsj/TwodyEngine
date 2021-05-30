@@ -1,6 +1,6 @@
 local GraphModule = {
   anchorSize = 3,
-  base = {
+  baseVector = {
     x = (love.graphics.getWidth() / 3),
     y = -(love.graphics.getHeight() / 3)
   },
@@ -12,8 +12,8 @@ function GraphModule:getGlobalPosition(x, y)
   assert(type(y) == 'number' , 'getGlobalPosition::y should be a number')
 
   return {
-    x = x + self.base.x,
-    y = y + self.base.y
+    x = x + self.baseVector.x,
+    y = y + self.baseVector.y
   }
 end
 
@@ -21,24 +21,16 @@ function GraphModule:draw()
   for g in ipairs(self.graphs) do
     local graph = self.graphs[g]
     if graph.active then
+      -- Outline
       love.graphics.rectangle('line', graph.offset.x, graph.offset.y, graph.width, graph.height)
-      love.graphics.setColor(1,1,1,0.2)
+      -- Background
+      love.graphics.setColor(0.3,0.3,0.3,0.8)
       love.graphics.rectangle('fill', graph.offset.x, graph.offset.y, graph.width, graph.height)
+      -- Label
       love.graphics.setColor(1,1,1,1)
       love.graphics.print(string.format(graph.label, graph.values[#graph.values]), graph.offset.x, graph.offset.y)
-      love.graphics.setColor(1,1,1,1)
-      self.drawGraph(graph)
     end
   end
-end
-
-function GraphModule:drawGraph(graph)
-  local graphOffset = GraphModule:getGlobalPosition(20, 30)
-  -- Draw axis
-  love.graphics.line(graphOffset.x, graphOffset.y, 0, 0)
-  love.graphics.line(graphOffset.x, (love.graphics.getHeight() / 3), (love.graphics.getWidth() / 3), (love.graphics.getHeight() / 3))
-  love.graphics.setColor(1,1,1,1)
-
   love.graphics.setColor(1,1,1,1)
 end
 
@@ -58,11 +50,11 @@ function GraphModule:addGraph(anchorPosition, label, active, valueFunction)
     values = {0},
     samplingLength = 30,
     update = function(g)
-        if #g.values > g.samplingLength then
-          table.remove(g.values, 1)
-        end
-        table.insert(g.values, valueFunction())
-      end
+              if #g.values > g.samplingLength then
+                table.remove(g.values, 1)
+              end
+              table.insert(g.values, valueFunction())
+            end
   }
 
   table.insert(self.graphs, graph)

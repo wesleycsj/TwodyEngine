@@ -56,8 +56,7 @@ end
 
 function System:addGraph(anchorPosition, label, active, valueFunction)
   if self.modules.GraphModule then
-    local graph = self.modules.GraphModule:addGraph(anchorPosition, label, active, valueFunction)
-    return graph
+    return self.modules.GraphModule:addGraph(anchorPosition, label, active, valueFunction)
   else
     Logger:print('error', 'Cannot add graph `' .. label .. '`')
   end

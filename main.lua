@@ -14,9 +14,7 @@ end
 function love.draw()
   twody.Game:draw()
 
-  Graphics:tick()
-
-  if twody.Game.UI then
+  if type(twody.Game.UI['draw']) == 'function' then
     twody.Game.UI:draw()
   end
 
@@ -38,6 +36,7 @@ function love.update(dt)
 end
 
 function love.keypressed(key, scancode, isrepeat)
+  love.graphics.setColor(1,1,1,1)
   if type(twody.KeyEvents['keypressed']) == 'function' then
     twody.KeyEvents:keypressed(key, scancode, isrepeat)
   end

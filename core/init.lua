@@ -3,7 +3,6 @@ local core = {
   Logger = require("logger"),
   KeyEvents = require("keyevents"),
   UI = require("ui"),
-  Graphics = require("graphics"),
   Game = nil
 }
 
