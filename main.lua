@@ -1,9 +1,32 @@
 local twody = require('core')
 local utf8 = require("utf8")
-
+local gameconf = nil
 function love.load()
-  twody:init()
+  -- Search and load gameconf.lua
+  local confChunk, confErr = loadfile('gameconf.lua')
 
+  if confChunk then
+    gameconf = confChunk()
+  else
+    Logger:print('info', 'Could not load game config.')
+    gameconf = {
+      x = nil,
+      y = nil,
+      width = 800,
+      height = 600,
+      fullscreen = false,
+      vsync = 1,
+      msaa = 0,
+      resizable = false,
+      borderless = false,
+      centered = true,
+      title = 'Twody game'
+    }
+  end
+  
+  twody.System:createApplication(gameconf)
+
+  twody:init()
   twody.System:load()
 
   if type(twody.Game['load']) == 'function' then

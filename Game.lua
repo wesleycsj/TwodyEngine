@@ -1,7 +1,7 @@
 local Game = {}
 
 function Game:load()
-  self.System:createApplication('Application', nil, nil, 640 , 480, false, false, true, true, 0)
+  --self.System:createApplication('Application', nil, nil, 640 , 480, false, false, true, true, 0)
   local window = self.UI:createWindow('main_window', 'Hello World')
   --local window2 = self.UI:createWindow('secondary_window', 'Hello World')
   window.orientation = 'VERTICAL'

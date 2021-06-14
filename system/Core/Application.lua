@@ -12,26 +12,27 @@ local Application = {
   TITLE = ''
 }
 
-function Application:create(title, x, y, width, height, fullscreen, resizable, bordeless, centered,  vsync, msaa)
+--function Application:create(title, x, y, width, height, fullscreen, resizable, bordeless, centered,  vsync, msaa)
+function Application:create(conf)
   -- variables assert
-  assert((type(title) == 'string'), 'should provide a string for title')
-  assert((width  > 0), '`width` should be greater than 1')
-  assert((height > 0), '`height` should be greater than 1')
+  assert((type(conf.title) == 'string'), 'should provide a string for title')
+  assert((type(conf.width) == 'number') and (conf.width > 0), '`width` should be greater than 1')
+  assert((type(conf.height) == 'number') and (conf.height > 0), '`height` should be greater than 1')
 
-  Application.TITLE = title
-  Application.X = x
-  Application.Y = y
-  Application.WIDTH = width
-  Application.HEIGHT = height
+  Application.TITLE = conf.title
+  Application.X = conf.x
+  Application.Y = conf.y
+  Application.WIDTH = conf.width
+  Application.HEIGHT = conf.height
 
-  if type(x) == 'number' or x == nil then Application.X = x end
-  if type(y) == 'number' or y == nil then Application.Y = y end
-  if fullscreen == true or fullscreen == false then Application.FULLSCREEN = fullscreen end
-  if resizable == true or resizable == false then Application.RESIZABLE = resizable end
-  if borderless == true or borderless == false then Application.BORDERLESS = borderless end
-  if centered == true or centered == false then Application.CENTERED = centered end
-  if vsync == 0 or vsync == 1 or vsync == -1 then Application.VSYNC = vsync end
-  if msaa == 0 or msaa == 2 or msaa == 4 or msaa == 8 then Application.MSAA = msaa end
+  if type(conf.x) == 'number' or conf.x == nil then Application.X = conf.x end
+  if type(conf.y) == 'number' or conf.y == nil then Application.Y = conf.y end
+  if conf.fullscreen == true or conf.fullscreen == false then Application.FULLSCREEN = conf.fullscreen end
+  if conf.resizable == true or conf.resizable == false then Application.RESIZABLE = conf.resizable end
+  if conf.borderless == true or conf.borderless == false then Application.BORDERLESS = conf.borderless end
+  if conf.centered == true or conf.centered == false then Application.CENTERED = conf.centered end
+  if conf.vsync == 0 or conf.vsync == 1 or conf.vsync == -1 then Application.VSYNC = conf.vsync end
+  if conf.msaa == 0 or conf.msaa == 2 or conf.msaa == 4 or conf.msaa == 8 then Application.MSAA = conf.msaa end
 
   local status = love.window.setMode(Application.WIDTH, Application.HEIGHT, {
     fullscreen = Application.FULLSCREEN,
@@ -50,8 +51,8 @@ function Application:create(title, x, y, width, height, fullscreen, resizable, b
     y = Application.Y
   })
 
-  love.window.setTitle(title)
-  
+  love.window.setTitle(conf.title)
+
   assert((status == true), 'It was no possible to create the application window.')
 end
 
