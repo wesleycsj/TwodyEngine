@@ -1,9 +1,9 @@
 local Game = {}
 
 function Game:load()
-  self.UI:createApplication('Application', nil, nil, 800 , 600, false, false, true, true, 0)
+  self.System:createApplication('Application', nil, nil, 640 , 480, false, false, true, true, 0)
   local window = self.UI:createWindow('main_window', 'Hello World')
-  --local window2 = self.ui:createWindow('secondary_window', 'Hello World')
+  --local window2 = self.UI:createWindow('secondary_window', 'Hello World')
   window.orientation = 'VERTICAL'
 
   local mastercontainer = self.UI:createContainer()
@@ -45,9 +45,9 @@ function Game:load()
   window:insertContainer(mastercontainer)
   window:insertContainer(mastercontainer2)
 
-  self.graph = self.System:addGraph('top_left', 'FPS: %.2f', true, function ()
-    return love.timer.getFPS()
-  end)
+  -- self.graph = self.System:addGraph('top_left', 'FPS: %.2f', true, function ()
+  --   return love.timer.getFPS()
+  -- end)
 end
 
 function Game:draw()

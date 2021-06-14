@@ -2,9 +2,6 @@ local ui = {
   __idCounter = 0,
   __childs = {},
   __namesList = {},
-  modules = {
-    Application   = dofile('ui/Core/Application.lua'),
-  },
   components = {
     Window = dofile('ui/Components/Window.lua'),
     Container = dofile('ui/Components/Container.lua'),
@@ -28,10 +25,6 @@ function ui:setID(name)
     return self.__namesList[name]
   end
   return false
-end
-
-function ui:createApplication(title, x, y, width, height, isFullscreen, resizable, bordeless, centered,  vsync, msaa)
-  return self.modules.Application:create(title, x, y, width, height, isFullscreen, resizable, bordeless, centered,  vsync, msaa)
 end
 
 function ui:createWindow(name, title, hasBar)
