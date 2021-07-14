@@ -8,14 +8,14 @@ function Game:load()
 
   local mastercontainer = self.UI:createContainer()
   mastercontainer.visible = true
-  mastercontainer.width = 800
-  mastercontainer.height = 300
+  mastercontainer.width = love.graphics.getWidth()
+  mastercontainer.height = love.graphics.getHeight() /2
   mastercontainer.borderColor = {1,0.5,0.8,1}
   mastercontainer.name = 'master'
 
   local mastercontainer2 = self.UI:createContainer()
-  mastercontainer2.width = 800
-  mastercontainer2.height = 300
+  mastercontainer2.width = love.graphics.getWidth()
+  mastercontainer2.height = love.graphics.getHeight() /2
   mastercontainer2.borderColor = {1,0.5,0.8,1}
   mastercontainer2.name = 'master2'
 

@@ -8,7 +8,7 @@ function love.load()
   if confChunk then
     gameconf = confChunk()
   else
-    Logger:print('info', 'Could not load game config.')
+    Logger:print('info', 'Could not load game config. Falling back to default conf.')
     gameconf = {
       x = nil,
       y = nil,
@@ -23,7 +23,7 @@ function love.load()
       title = 'Twody game'
     }
   end
-  
+
   twody.System:createApplication(gameconf)
 
   twody:init()

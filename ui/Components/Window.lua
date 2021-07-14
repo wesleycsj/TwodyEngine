@@ -36,6 +36,7 @@ function Window:draw(v)
   local childs = self.__childs
   -- Draw Containers
   Window.align(self, childs)
+  
   for _,v in pairs(childs) do
     if v.visible then v:draw() end
   end

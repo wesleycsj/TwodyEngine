@@ -1,13 +1,13 @@
 -- Defines the GraphKit
 local GraphKit = {
-  graphs = {},
+  __childs = {},
   components = {
     Drawable = {
-      border = nil,
+      border =   { top = 0, left = 0, right = 0, bottom = 0 },
       childs = nil,
       height = -1,
-      margin = nil,
-      paddings = nil,
+      margin =   { top = 0, left = 0, right = 0, bottom = 0 },
+      paddings = { top = 0, left = 0, right = 0, bottom = 0 },
       type = 'graph_drawable',
       width = -1,
     }
@@ -33,6 +33,30 @@ function GraphKit.components.Drawable:new(o)
   return newObject
 end
 
+function GraphKit:createGraph(label, active, valueFunction, offset, anchorSize)
+  assert(type(label) == 'string', 'Label of graph should be a string')
+  assert(type(active) == 'boolean', 'Active argument should be a boolean')
+  assert(type(valueFunction) == 'function', 'valueFunction should be a function returning the value.')
+  assert(type(valueFunction()) == 'number', 'valueFunction should return a number type.')
+
+  return {
+    active = active,
+    label = label,
+    offset = offset,
+    width = (love.graphics.getWidth() / anchorSize),
+    height = (love.graphics.getHeight() / anchorSize),
+    values = {0},
+    samplingLength = 30,
+    update = function(g)
+              if #g.values > g.samplingLength then
+                table.remove(g.values, 1)
+              end
+              table.insert(g.values, valueFunction())
+            end
+  }
+end
+
+
 function GraphKit:newPanel(o)
   local newPanel = self.components.Drawable:new(o)
   newPanel.type = 'graph_panel'
@@ -57,10 +81,6 @@ function GraphKit:addChild(parent, child)
   else
     table.insert(parent.childs, child)
   end
-end
-
-function GraphKit:draw()
-  
 end
 
 return GraphKit

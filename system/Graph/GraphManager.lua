@@ -1,11 +1,7 @@
 local GraphManager = {
   __GRAPHS = {},
-  anchorSize = 3,
-  margin = { top = 0, left = 0, right = 0, bottom = 0 },
-  paddings = { top = 0, left = 0, right = 0, bottom = 0 },
-  borders = { top = 0, left = 0, right = 0, bottom = 0 },
-  width = 0,
-  height = 0
+  GraphKit = dofile('system/Graph/GraphKit.lua'),
+  anchorSize = 3
 }
 
 function GraphManager:draw()
@@ -26,30 +22,9 @@ function GraphManager:draw()
 end
 
 function GraphManager:addGraph(anchorPosition, label, active, valueFunction)
-  assert(type(label) == 'string', 'Label of graph should be a string')
-  assert(type(active) == 'boolean', 'Active argument should be a boolean')
-  assert(type(valueFunction) == 'function', 'valueFunction should be a function returning the value.')
-  assert(type(valueFunction()) == 'number', 'valueFunction should return a number type.')
-
   local offset = self:calculateAnchor(anchorPosition)
-  local graph = {
-    active = active,
-    label = label,
-    offset = offset,
-    width = (love.graphics.getWidth() / self.anchorSize),
-    height = (love.graphics.getHeight() / self.anchorSize),
-    values = {0},
-    samplingLength = 30,
-    update = function(g)
-              if #g.values > g.samplingLength then
-                table.remove(g.values, 1)
-              end
-              table.insert(g.values, valueFunction())
-            end
-  }
-
+  local graph = self.GraphKit:createGraph(label, active, valueFunction, offset, self.anchorSize)
   table.insert(self.__GRAPHS, graph)
-
   return graph
 end
 
